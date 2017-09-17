@@ -6,41 +6,59 @@ import java.text.MessageFormat;
 public class CoffeeService {
 
     public static final String DRINK_FORMAT = "{0}:{1}:{2}";
-    public static final String COFFRE_CODE = "C";
-    public static final String EMPTY_STRING = "";
-    public static final String TEA_CODE = "T";
-    public static final String CHOCOLATE_CODE = "H";
+    public static final String MESSAGE_MISSING_FORMAT = "M:the missing amount is {0}";
 
-    private String drink;
-    private Integer sugar;
+    public static final String EMPTY_STRING = "";
+
+    private IDrink drink;
+    private Double inputMoney;
 
     private String command;
 
-
-    public CoffeeService(String drink, Integer sugar) {
+    public CoffeeService(IDrink drink, Double money) {
         this.drink = drink;
-        this.sugar = sugar;
+        this.inputMoney = money;
+    }
+
+    public CoffeeService(IDrink drink) {
+        this(drink, null);
     }
 
     public Boolean verifieCommand() {
-        if (COFFRE_CODE.equals(drink) || TEA_CODE.equals(drink) || CHOCOLATE_CODE.equals(drink)) {
+        if (drink != null) {
             return true;
         } else {
             return false;
         }
     }
 
-    public void prepareCommand() {
-        if (sugar == 0) {
-            command = MessageFormat.format(DRINK_FORMAT, drink, EMPTY_STRING, EMPTY_STRING);
+    public void prepareDrinkCommand() {
+        if (drink.getSugar() == 0) {
+            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode(), EMPTY_STRING, EMPTY_STRING);
         } else {
-            command = MessageFormat.format(DRINK_FORMAT, drink, sugar, 1);
-
+            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode(), drink.getSugar(), 1);
         }
 
     }
 
     public String getCommand() {
         return command;
+    }
+
+    public Boolean checkInputMoney() {
+        if (Double.compare(inputMoney, drink.getDrinkPrice()) == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void getCommandInfo() {
+        Double missingAmount = Math.abs(inputMoney - drink.getDrinkPrice());
+        if (checkInputMoney()) {
+            prepareDrinkCommand();
+        } else {
+            command = MessageFormat.format(MESSAGE_MISSING_FORMAT, missingAmount);
+        }
     }
 }
