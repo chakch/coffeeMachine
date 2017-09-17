@@ -1,6 +1,10 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.*;
+
 
 /**
  * Created by abdellatif on 16/09/2017.
@@ -8,57 +12,59 @@ import org.junit.Test;
 
 public class CoffeeServiceTest {
 
+
     @Before
     public void resetCounting() {
+        MockitoAnnotations.initMocks(this);
         RepoData.resetCounting();
     }
     @Test
     public void whenCustomerMadeACoffeWithoutSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 0));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("C::", coffeeService.getCommand());
+        Assert.assertEquals("C::", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeACoffeWithOneSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("C:1:1", coffeeService.getCommand());
+        Assert.assertEquals("C:1:1", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeACoffeWithTwoSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 2));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("C:2:1", coffeeService.getCommand());
+        Assert.assertEquals("C:2:1", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeATeeWithtoutSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("T", 0));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("T::", coffeeService.getCommand());
+        Assert.assertEquals("T::", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeATeeWithSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("T", 1));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("T:1:1", coffeeService.getCommand());
+        Assert.assertEquals("T:1:1", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeAChocolateWithoutSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("H", 0));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("H::", coffeeService.getCommand());
+        Assert.assertEquals("H::", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenCustomerMadeAChocolateWithSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("H", 1));
         coffeeService.prepareDrinkCommand();
-        Assert.assertEquals("H:1:1", coffeeService.getCommand());
+        Assert.assertEquals("H:1:1", coffeeService.getInformationMessage());
     }
 
     @Test
@@ -90,21 +96,21 @@ public class CoffeeServiceTest {
     public void whenClientOrdreCoffeeWithMissingAmountShowInformationMessage() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 0.1);
         coffeeService.getCommandInfo();
-        Assert.assertEquals("M:the missing amount is 0,5", coffeeService.getCommand());
+        Assert.assertEquals("M:the missing amount is 0,5", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenClientOrdreCoffeeWithAmountShowInformationMessage() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
         coffeeService.getCommandInfo();
-        Assert.assertEquals("C:1:1", coffeeService.getCommand());
+        Assert.assertEquals("C:1:1", coffeeService.getInformationMessage());
     }
 
     @Test
     public void whenClientOrderOrangeJuice() {
         CoffeeService coffeeService = new CoffeeService(new Orange(), 0.6);
         coffeeService.getCommandInfo();
-        Assert.assertEquals("O::", coffeeService.getCommand());
+        Assert.assertEquals("O::", coffeeService.getInformationMessage());
 
     }
 
@@ -112,7 +118,7 @@ public class CoffeeServiceTest {
     public void whenClientOrderHotCoffee() {
         CoffeeService coffeeService = new CoffeeService(new Coffee(0, true), 0.6);
         coffeeService.getCommandInfo();
-        Assert.assertEquals("Ch::", coffeeService.getCommand());
+        Assert.assertEquals("Ch::", coffeeService.getInformationMessage());
 
     }
 
@@ -161,5 +167,6 @@ public class CoffeeServiceTest {
         Assert.assertEquals("Tea: 0,4$ Coffee: 1,2$ ", RepoData.getSummary());
 
     }
+
 
 }
