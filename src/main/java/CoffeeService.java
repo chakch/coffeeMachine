@@ -3,17 +3,18 @@ import java.text.MessageFormat;
 /**
  * Created by abdellatif on 16/09/2017.
  */
-public class CoffeeService {
+public class CoffeeService  {
 
     public static final String DRINK_FORMAT = "{0}:{1}:{2}";
     public static final String MESSAGE_MISSING_FORMAT = "M:the missing amount is {0}";
+    public static final String MESSAGE_EMPTY_FORMAT = "M:Water/Milk is missing";
 
     public static final String EMPTY_STRING = "";
 
     private IDrink drink;
     private Double inputMoney;
 
-    private String command;
+    private String informationMessage;
 
     public CoffeeService(IDrink drink, Double money) {
         this.drink = drink;
@@ -34,15 +35,15 @@ public class CoffeeService {
 
     public void prepareDrinkCommand() {
         if (drink.getSugar() == 0) {
-            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), EMPTY_STRING, EMPTY_STRING);
+            informationMessage = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), EMPTY_STRING, EMPTY_STRING);
         } else {
-            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), drink.getSugar(), 1);
+            informationMessage = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), drink.getSugar(), 1);
         }
 
     }
 
-    public String getCommand() {
-        return command;
+    public String getInformationMessage() {
+        return informationMessage;
     }
 
     public Boolean checkInputMoney() {
@@ -58,7 +59,7 @@ public class CoffeeService {
         if (checkInputMoney()) {
             prepareDrinkCommand();
         } else {
-            command = MessageFormat.format(MESSAGE_MISSING_FORMAT, missingAmount);
+            informationMessage = MessageFormat.format(MESSAGE_MISSING_FORMAT, missingAmount);
         }
     }
 
