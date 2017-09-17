@@ -14,6 +14,9 @@ public class CoffeeFactory {
         if ("H".equals(code)) {
             return new Chocolate(sugar);
         }
+        if ("O".equals(code)) {
+            return new Orange();
+        }
         return null;
     }
 }

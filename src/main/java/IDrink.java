@@ -3,10 +3,11 @@
  */
 public interface IDrink {
 
-
     String getDrinkCode();
 
     Double getDrinkPrice();
 
     Integer getSugar();
+
+    String informClient();
 }

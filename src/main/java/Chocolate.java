@@ -10,5 +10,7 @@ public class Chocolate extends Drink {
         this.code = CHOCOLATE_CODE;
         this.price = CHOCOLATE_VALUE;
         this.sugar = sugar;
+        this.isHot = false;
+
     }
 }

@@ -94,6 +94,20 @@ public class CoffeeServiceTest {
         Assert.assertEquals("C:1:1", coffeeService.getCommand());
     }
 
+    @Test
+    public void whenClientOrderOrangeJuice() {
+        CoffeeService coffeeService = new CoffeeService(new Orange(), 0.6);
+        coffeeService.getCommandInfo();
+        Assert.assertEquals("O::", coffeeService.getCommand());
 
+    }
+
+    @Test
+    public void whenClientOrderHotCoffee() {
+        CoffeeService coffeeService = new CoffeeService(new Coffee(0, true), 0.6);
+        coffeeService.getCommandInfo();
+        Assert.assertEquals("Ch::", coffeeService.getCommand());
+
+    }
 
 }

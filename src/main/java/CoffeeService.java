@@ -34,9 +34,9 @@ public class CoffeeService {
 
     public void prepareDrinkCommand() {
         if (drink.getSugar() == 0) {
-            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode(), EMPTY_STRING, EMPTY_STRING);
+            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), EMPTY_STRING, EMPTY_STRING);
         } else {
-            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode(), drink.getSugar(), 1);
+            command = MessageFormat.format(DRINK_FORMAT, drink.getDrinkCode() + drink.informClient(), drink.getSugar(), 1);
         }
 
     }
@@ -61,4 +61,5 @@ public class CoffeeService {
             command = MessageFormat.format(MESSAGE_MISSING_FORMAT, missingAmount);
         }
     }
+
 }
