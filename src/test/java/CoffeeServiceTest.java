@@ -1,4 +1,5 @@
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -6,6 +7,11 @@ import org.junit.Test;
  */
 
 public class CoffeeServiceTest {
+
+    @Before
+    public void resetCounting() {
+        RepoData.resetCounting();
+    }
     @Test
     public void whenCustomerMadeACoffeWithoutSugar() {
         CoffeeService coffeeService = new CoffeeService(CoffeeFactory.getDrinkClass("C", 0));
@@ -107,6 +113,52 @@ public class CoffeeServiceTest {
         CoffeeService coffeeService = new CoffeeService(new Coffee(0, true), 0.6);
         coffeeService.getCommandInfo();
         Assert.assertEquals("Ch::", coffeeService.getCommand());
+
+    }
+
+    @Test
+    public void countcoffeeOrdered() {
+        CoffeeService coffeeServiceOne = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        CoffeeService coffeeServiceTwo = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        CoffeeService coffeeServiceThree = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+
+        Assert.assertEquals(Integer.valueOf(3), RepoData.getNumberOfDrink());
+    }
+
+    @Test
+    public void whenCustomersOrderThreeCoffee() {
+        CoffeeService coffeeServiceOne = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        CoffeeService coffeeServiceTwo = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        CoffeeService coffeeServiceThree = new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+
+        Assert.assertEquals(Double.valueOf(1.8), RepoData.getDrinkCountMap().get("C"));
+    }
+
+    @Test
+    public void whenCustomersOrderMixedCommand() {
+        new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("T", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("H", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("O", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("O", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("D", 1), 1.0);
+
+
+        Assert.assertEquals(Double.valueOf(1.2), RepoData.getDrinkCountMap().get("C"));
+        Assert.assertEquals(Double.valueOf(0.4), RepoData.getDrinkCountMap().get("T"));
+        Assert.assertEquals(Double.valueOf(0.5), RepoData.getDrinkCountMap().get("H"));
+        Assert.assertEquals(Double.valueOf(1.2), RepoData.getDrinkCountMap().get("O"));
+
+    }
+
+    @Test
+    public void summaryOfAllDayCommand() {
+        new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("C", 1), 1.0);
+        new CoffeeService(CoffeeFactory.getDrinkClass("T", 1), 1.0);
+
+        Assert.assertEquals("Tea: 0,4$ Coffee: 1,2$ ", RepoData.getSummary());
 
     }
 
