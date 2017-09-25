@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="coffeeMachine" />
+        <module name="com.arolla.coffeeMachine" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="coffeeMachine" target="1.5" />
+      <module name="com.arolla.coffeeMachine" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

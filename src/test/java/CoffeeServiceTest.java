@@ -1,7 +1,11 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
@@ -10,7 +14,13 @@ import static org.mockito.Mockito.*;
  * Created by abdellatif on 16/09/2017.
  */
 
+@RunWith(MockitoJUnitRunner.class)
 public class CoffeeServiceTest {
+
+
+    CoffeeService coffeeService = Mockito.mock(CoffeeService.class);
+    @Mock
+    BeverageQuantityChecker beverageQuantityChecker;
 
 
     @Before
@@ -168,5 +178,19 @@ public class CoffeeServiceTest {
 
     }
 
+
+    @Test
+    public void checkStorageStatusCustommer(){
+        Mockito.when(beverageQuantityChecker.isEmpty("C")).thenReturn(true);
+        Assert.assertFalse(coffeeService.isStorageAvailibilty());
+    }
+
+    @Test
+    public void sendErrorMessageToMachine(){
+
+        when(coffeeService.isStorageAvailibilty()).thenReturn(true);
+        coffeeService.chechCoffeMachineStatus();
+        Assert.assertEquals("M:Water is missing",coffeeService.getInformationMessage());
+    }
 
 }

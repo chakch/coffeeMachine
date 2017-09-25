@@ -10,4 +10,6 @@ public interface IDrink {
     Integer getSugar();
 
     String informClient();
+
+    String getErrorMessage();
 }
